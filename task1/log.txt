@@ -1,0 +1,11 @@
+commit 49fb0723465d26a230aaaab94fdb2c207bb3ce6c
+Author: Daniil <ddan62626@gmail.com>
+Date:   Mon Feb 15 01:26:03 2021 +0300
+
+    feat: git status in task1/status.txt
+
+commit 254785733f7d520aa645e83825aa2523eb530235
+Author: Daniil <ddan62626@gmail.com>
+Date:   Mon Feb 15 01:24:15 2021 +0300
+
+    init: add .gitignore
