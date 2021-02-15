@@ -1,10 +1,10 @@
 # some .idea ignores
 
 *.iml
-.DS_Store/
-.idea/
-out/
+.DS_Store
+.idea
+out
 
 # additional ignores
 
-coverage/
+coverage
