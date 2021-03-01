@@ -1,0 +1,263 @@
+::placeholder{
+	color: #333333;
+}
+:-ms-input-placeholder{
+	color: #333333;
+}
+::-ms-input-placeholder{
+	color: #333333;
+}
+
+a:link, a:visited {
+	color: #F0F4EF;
+  	text-align: center; 
+  	text-decoration: none;
+}
+
+a:hover, a:active {
+	color: #F0F4EF;
+	text-decoration: none;
+}
+a:active{
+	color: #999999;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+input{
+	display: block;
+	-webkit-appearance: textfield;
+	border:none;
+  background-image:none;
+  background-color:transparent;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  color:#F0F4EF;
+  margin: 0px;
+  padding: 0px;
+  font-size: 2em;
+  cursor: text;
+}
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+
+@keyframes activateIn{
+	from{
+		margin-left: 0%;
+		width: 100%;
+		border-color: #F0F4EF;
+	}
+	50%{
+		
+		margin-left: 100%;
+		width: 0%;
+		border-color: #F0F4EF;
+	}
+	51%{
+		margin-left: 0%;
+		width: 0%;
+		border-color: #F0F4EF;
+	}
+	to{
+		margin-left: 0%;
+		width: 100%;
+		border-color: #F0F4EF;
+	}
+}
+@keyframes in{
+	from{
+		opacity: 0;
+	}to{
+		opacity: 1;
+	}
+}
+
+
+body {
+  font-family: 'Poppins', sans-serif;
+	background-color: #090302;
+	color: #F0F4EF;
+  padding: 5px;
+  overflow-x: hidden;
+}
+
+.search-main {
+  overflow-x: hidden;
+  position: absolute;
+  width: 98vw;
+  min-height: 98vh;
+  padding: 40px;
+}
+
+.capture {
+  display: block;
+  position: relative;
+  margin-bottom: 15px;
+	animation-duration: 2s;
+	animation-name: in;
+	font-size: 1.7em;
+	color: #F0F4EF;
+	transition: 0.5s linear;
+}
+
+section.search input {
+  float: left;
+  width: auto;
+}
+
+.tag-cloud-container {
+  display: block;
+  position: relative;
+  font-family: 'Poppins', sans-serif;
+  padding: 10px;
+}
+
+#search {
+  display: none;
+  float:right;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.continue{
+	padding: 5px;
+	font-size: 1.5em;
+	margin-right: 40px;
+}
+.continue a::after{
+	display: block;
+	content: "";
+	border-style:solid;
+	border-color: #F0F4EF;
+	border-width: 2px;
+}
+.continue:active a::after{
+	border-style: none;
+}
+
+.selected-tags {
+  position: relative;
+  display: block;
+  float: left;
+  font-size: 1.3rem;
+  margin-top: 1.5rem;
+  width: 60%;
+}
+
+.tag.removable {
+  border-color: #EFE9F4;
+  margin: 0.5rem;
+  position: relative;
+}
+
+.tag.removable a {
+  color: #EE6352!important;
+}
+
+#skip{
+	position: absolute;
+	bottom: 0;
+	transition: 0.5s linear;
+	animation-duration: 1.5s;
+	animation-name: idk, in;
+}
+
+@media screen and (max-width: 600px) {
+  body {
+    overflow-y: scroll;
+  }
+  main {
+    padding: 10px;
+  }
+  .tags {
+    position: relative;
+    padding: 10px;
+    width: auto;
+  }
+  .tag-cloud-container {
+    position: relative;
+    font-size: 1rem;
+    padding: 5px;
+    width: auto;
+  }
+  .tag {
+    padding: 0.5rem;
+  }
+  section.search{
+    width: auto;
+    min-width: auto;
+  }
+  #search {
+    margin-top: 2rem;
+    margin-bottom: 4rem;
+    padding-right: 0;
+  }
+  #skip{
+    right: 0;
+  }
+  .selected-tags {
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 601px) {
+  .tags {
+    position: relative;
+    float: right;
+    width: 50%;
+    min-width: 250px;
+  }
+  .tag-cloud-container {
+    position: relative;
+    font-size: 2rem;
+    margin-bottom: 4rem;
+  }
+  .tag {
+    padding: 0.8rem;
+  }
+  section.search{
+    float: left;
+    position: relative;
+    width: 50%;
+    min-width: 250px;
+  }
+}
+
+.continue:hover a::after{
+	animation-duration: 1s;
+	animation-name: activateIn;
+}
+
+#arrow{
+	display: inline-block;
+}
+
+@keyframes idk{
+	from{
+		margin-left: 70px;
+	}to{
+		margin-left: 0;
+	}
+}
