@@ -1,0 +1,477 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Google Books",
+        "license": {
+            "name": "MIT"
+        }
+    },
+    "servers": [
+        {
+            "url": "https://www.googleapis.com/books"
+        }
+    ],
+    "security": [
+        {
+            "OAuth2": ["admin"]
+        }
+    ],
+    "paths": {
+        "/mylibrary/bookshelves": {
+            "get": {
+                "summary": "User bookshelves",
+                "tags": [
+                    "user",
+                    "bookshelve"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of user bookshelves",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "kind": {
+                                            "type": "string",
+                                            "description": "Resource type"
+                                        },
+                                        "items": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Bookshelve"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/mylibrary/bookshelves/{bookshelveId}/volumes": {
+            "get": {
+                "summary": "Volumes in bookshelve",
+                "tags": [
+                    "volume",
+                    "bookshelve",
+                    "book"
+                ],
+                "parameters": [
+                  {
+                      "name": "bookshelveId",
+                      "in": "path",
+                      "description": "Bookshelve id",
+                      "required": true,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of bookshelve's volumes",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "kind": {
+                                            "type": "string",
+                                            "default": "books#volumes",
+                                            "description": "Resource type"
+                                        },
+                                        "totalItems": {
+                                            "type": "integer",
+                                            "format": "int64",
+                                            "description": "Total items count"
+                                        },
+                                        "items": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Volume"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/volumes/{volumeId}": {
+            "get": {
+                "summary": "Volume",
+                "tags": [
+                    "Book",
+                    "Volume"
+                ],
+                "parameters": [
+                  {
+                      "name": "volumeId",
+                      "in": "path",
+                      "description": "Volume id",
+                      "required": true,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Finds volume by its id",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Volume"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/mylibrary/bookshelves/{bookshelveId}/addVolume": {
+            "post": {
+                "summary": "Add provided volume to the bookshelve",
+                "parameters": [
+                  {
+                    "name": "volumeId",
+                    "in": "query",
+                    "description": "ID of the volume",
+                    "required": true,
+                    "schema": {
+                      "type": "string"
+                    }
+                  },
+                  {
+                      "name": "bookshelveId",
+                      "in": "path",
+                      "description": "Bookshelve id",
+                      "required": true,
+                      "schema": {
+                          "type": "string"
+                      }
+                  }
+                ],
+                "tags": [
+                    "bookshelve",
+                    "add",
+                    "volume"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Volume was successfully added to the bookshelve"
+                    }
+                }
+            }
+        },
+        "/mylibrary/bookshelves/<bookshelve_id>/removeVolume": {
+            "post": {
+                "summary": "Removes provided volume from the bookshelve",
+                "parameters": [
+                  {
+                    "name": "volumeId",
+                    "in": "query",
+                    "description": "ID of the volume",
+                    "required": true,
+                    "schema": {
+                      "type": "string"
+                    }
+                  }
+                ],
+                "tags": [
+                    "bookshelve",
+                    "remove",
+                    "volume"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Volume was successfully removed from the bookshelve"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "OAuth2": {
+                "type": "oauth2",
+                "flows": {
+                    "authorizationCode": {
+                        "authorizationUrl": "https://accounts.google.com/o/oauth2/auth",
+                        "tokenUrl": "https://accounts.google.com/o/oauth2/token",
+                        "scopes": {
+                            "admin": "https://www.googleapis.com/auth/books"
+                        }
+                    }
+                }
+            }
+        },
+        "schemas": {
+            "Bookshelve": {
+                "type": "object",
+                "properties": {
+                    "kind": {
+                        "type": "string",
+                        "default": "books#bookshelf",
+                        "description": "Resource type"
+                    },
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Bookshelve title"
+                    },
+                    "access": {
+                        "type": "string",
+                        "description": "Access type",
+                        "default": "PRIVATE"
+                    },
+                    "updated": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Last update timestamp"
+                    },
+                    "created": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Creation timestamp"
+                    },
+                    "volumesLastUpdated": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Volumes last update timestamp"
+                    },
+                    "volumeCount": {
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                }
+            },
+            "Volume": {
+                "type": "object",
+                "properties": {
+                    "kind": {
+                        "type": "string",
+                        "default": "books#volume",
+                        "description": "Resource type"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "etag": {
+                        "type": "string"
+                    },
+                    "selfLink": {
+                        "type": "string",
+                        "format": "url"
+                    },
+                    "volumeInfo": {
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "type": "string",
+                                "description": "Volume title"
+                            },
+                            "authors": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "description": "Author name"
+                                }
+                            },
+                            "publisher": {
+                                "type": "string",
+                                "description": "Publisher name"
+                            },
+                            "publishedDate": {
+                                "type": "string",
+                                "format": "date"
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "industryIdentifiers": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "type": "string"
+                                        },
+                                        "identifier": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            },
+                            "readingModes": {
+                                "type": "object",
+                                "properties": {
+                                    "text": {
+                                        "type": "boolean"
+                                    },
+                                    "image": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            },
+                            "pageCount": {
+                                "type": "integer",
+                                "format": "int64"
+                            },
+                            "printType": {
+                                "type": "string"
+                            },
+                            "categories": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string",
+                                    "description": "category name"
+                                }
+                            },
+                            "averageRating": {
+                                "type": "number"
+                            },
+                            "ratingsCount": {
+                                "type": "integer",
+                                "format": "int64"
+                            },
+                            "maturityRating": {
+                                "type": "string"
+                            },
+                            "allowAnonLogging": {
+                                "type": "boolean"
+                            },
+                            "contentVersion": {
+                                "type": "string"
+                            },
+                            "panelizationSummary": {
+                                "type": "object"
+                            },
+                            "imageLinks": {
+                                "type": "object",
+                                "properties": {
+                                    "smallThumbnail": {
+                                        "type": "string",
+                                        "format": "url"
+                                    },
+                                    "thumbnail": {
+                                        "type": "string",
+                                        "format": "url"
+                                    }
+                                }
+                            },
+                            "previewLink": {
+                                "type": "string",
+                                "format": "url"
+                            },
+                            "infoLink": {
+                                "type": "string",
+                                "format": "url"
+                            },
+                            "canonicalVolumeLink": {
+                                "type": "string",
+                                "format": "url"
+                            }
+                        }
+                    },
+                    "layerInfo": {
+                        "type": "object",
+                        "properties": {
+                            "layers": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "layerId": {
+                                            "type": "string"
+                                        },
+                                        "volumeAnnotationsVersion": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "userInfo": {
+                        "type": "object",
+                        "properties": {
+                            "updated": {
+                                "type": "string",
+                                "format": "url"
+                            }
+                        }
+                    },
+                    "saleInfo": {
+                        "type": "object",
+                        "properties": {
+                            "country": {
+                                "type": "string"
+                            },
+                            "saleability": {
+                                "type": "string"
+                            },
+                            "isEbook": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "accessInfo": {
+                        "type": "object",
+                        "properties": {
+                            "country": {
+                                "type": "string"
+                            },
+                            "viewability": {
+                                "type": "string"
+                            },
+                            "embeddable": {
+                                "type": "boolean"
+                            },
+                            "publicDomain": {
+                                "type": "boolean"
+                            },
+                            "textToSpeechPermission": {
+                                "type": "string"
+                            },
+                            "epub": {
+                                "type": "object",
+                                "properties": {
+                                    "isAvailable": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            },
+                            "pdf": {
+                                "type": "object",
+                                "properties": {
+                                    "isAvailable": {
+                                        "type": "boolean"
+                                    }
+                                }
+                            },
+                            "webReaderLink": {
+                                "type": "string",
+                                "format": "url"
+                            },
+                            "accessViewStatus": {
+                                "type": "string"
+                            },
+                            "quoteSharingAllowed": {
+                                "type": "boolean"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
