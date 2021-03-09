@@ -1,0 +1,307 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0.1",
+        "title": "Studio Ghibli API",
+        "license": {
+            "name": "MIT"
+        }
+    },
+    "servers": [
+        {
+            "url": "https://ghibliapi.herokuapp.com"
+        }
+    ],
+    "paths": {
+        "/films": {
+            "get": {
+                "summary": "List all films",
+                "operationId": "listFilms",
+                "tags": [
+                    "film"
+                ],
+                "parameters": [
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "Comma-separated list of fields to include in the response",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "amount of results (default 50) (maximum 250)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "All films",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Film"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/films/{filmId}": {
+            "get": {
+                "summary": "Film by id",
+                "operationId": "filmById",
+                "tags": [
+                    "film"
+                ],
+                "parameters": [
+                    {
+                        "name": "filmId",
+                        "in": "path",
+                        "description": "Film id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "Comma-separated list of fields to include in the response",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Film by id",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Film"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/people": {
+            "get": {
+                "summary": "List all persons",
+                "operationId": "listPeople",
+                "tags": [
+                    "person"
+                ],
+                "parameters": [
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "Comma-separated list of fields to include in the response",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "amount of results (default 50) (maximum 250)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "All persons",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Person"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/people/{personId}": {
+            "get": {
+                "summary": "Person by id",
+                "operationId": "personById",
+                "tags": [
+                    "person"
+                ],
+                "parameters": [
+                    {
+                        "name": "personId",
+                        "in": "path",
+                        "description": "Person id",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "Comma-separated list of fields to include in the response",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Person by id",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Person"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Person": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "gender": {
+                        "type": "string"
+                    },
+                    "age": {
+                        "type": "string"
+                    },
+                    "eye_color": {
+                        "type": "string"
+                    },
+                    "hair_color": {
+                        "type": "string"
+                    },
+                    "films": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "url"
+                        }
+                    },
+                    "species": {
+                        "type": "string",
+                        "format": "url"
+                    },
+                    "url": {
+                        "type": "string",
+                        "format": "url"
+                    }
+                }
+            },
+            "Film": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "original_title": {
+                        "type": "string"
+                    },
+                    "original_title_romanised": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "producer": {
+                        "type": "string"
+                    },
+                    "release_date": {
+                        "type": "string"
+                    },
+                    "running_time": {
+                        "type": "string"
+                    },
+                    "rt_score": {
+                        "type": "string"
+                    },
+                    "people": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "url"
+                        }
+                    },
+                    "species": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "url"
+                        }
+                    },
+                    "locations": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "url"
+                        }
+                    },
+                    "vehicles": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "url"
+                        }
+                    },
+                    "url": {
+                        "type": "string",
+                        "format": "url"
+                    }
+                }
+            }
+        }
+    }
+}
