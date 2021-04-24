@@ -1,0 +1,14 @@
+/*
+  All null fields must be set in 'local-default' or/and
+  'local-production' files
+
+  All times are in seconds
+  All distances are in metres
+  All sizes are in bytes
+*/
+{
+  server: {
+    port: 3001,
+    logger: 'debug',
+  }
+}
