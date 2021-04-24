@@ -1,0 +1,220 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Dogs API",
+        "license": {
+            "name": "MIT"
+        }
+    },
+    "servers": [
+        {
+            "url": "https://dog.ceo/api"
+        }
+    ],
+    "paths": {
+        "/breeds/list/all": {
+            "get": {
+                "summary": "List all breeds",
+                "tags": [
+                    "breeds"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "All breeds",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string"
+                                        },
+                                        "message": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/breeds/image/random": {
+            "get": {
+                "summary": "Get random doggy image",
+                "tags": [
+                    "dog",
+                    "random"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Random dog image",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "format": "url",
+                                            "description": "image link"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/breed/{breed}/images": {
+            "get": {
+                "summary": "Get images of dogs of provided breed",
+                "tags": [
+                    "dog",
+                    "breed"
+                ],
+                "parameters": [
+                    {
+                        "name": "breed",
+                        "in": "path",
+                        "description": "Breed",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Dog images of specified breed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string"
+                                        },
+                                        "message": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "format": "url",
+                                                "description": "image link"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/breed/{breed}/images/random": {
+            "get": {
+                "summary": "Get random image of dog of provided breed",
+                "tags": [
+                    "dog",
+                    "random",
+                    "breed"
+                ],
+                "parameters": [
+                    {
+                        "name": "breed",
+                        "in": "path",
+                        "description": "Breed",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Random dog image of specified breed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "format": "url",
+                                            "description": "image link"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/breed/{breed}/images/random/{count}": {
+            "get": {
+                "summary": "Get <count> random images of dog of provided breed",
+                "tags": [
+                    "dog",
+                    "random",
+                    "breed"
+                ],
+                "parameters": [
+                    {
+                        "name": "breed",
+                        "in": "path",
+                        "description": "Breed",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "count",
+                        "in": "path",
+                        "description": "Image count",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Random dog images of specified breed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "string"
+                                        },
+                                        "message": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string",
+                                                "format": "url",
+                                                "description": "image link"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

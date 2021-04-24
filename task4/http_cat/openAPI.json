@@ -1,0 +1,60 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "HTTP Cat",
+    "license": {
+      "name": "MIT"
+    },
+    "description": "This is the most amazing thing i've ever seen:)"
+  },
+  "servers": [
+    {
+      "url": "https://http.cat"
+    }
+  ],
+  "paths": {
+    "/{status}": {
+      "get": {
+        "summary": "Kitty",
+        "tags": [
+          "cat"
+        ],
+        "parameters": [
+          {
+            "name": "status",
+            "in": "path",
+            "description": "http status code",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Details about a user",
+            "content": {
+              "image/jpeg": {
+                  "schema": {
+                    "description": "image with pretty cat"
+                  }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected cat",
+            "content": {
+              "image/jpeg": {
+                "schema": {
+                  "description": "\"404 not found\" kitty"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
