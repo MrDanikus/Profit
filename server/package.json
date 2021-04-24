@@ -1,0 +1,30 @@
+{
+  "name": "profit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build/src/index.js",
+  "engines": {
+    "node": ">=15.11.0"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "NODE_ENV=test nyc mocha build/test/**/*.test.js --exit",
+    "build": "tsc --build .",
+    "start": "tsc & NODE_ENV=development node .",
+    "start:production": "tsc & NODE_ENV=production node .",
+    "lint": "gts lint",
+    "clean": "gts clean",
+    "fix": "gts fix"
+  },
+  "keywords": [],
+  "author": "Daniil Zhdanovich",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "7.25.0",
+    "gts": "3.1.0",
+    "mocha": "8.3.2",
+    "typescript": "4.2.4"
+  }
+}
