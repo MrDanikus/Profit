@@ -1,3 +1,8 @@
+import {MongoDatabase} from '../db/mongo';
+
+// connect databases
+MongoDatabase.connect();
+
 import express from 'express';
 
 import defaultMiddleware from '../middleware/default';

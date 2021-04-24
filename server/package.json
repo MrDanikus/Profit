@@ -36,6 +36,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "helmet": "^4.5.0",
+    "mongoose": "^5.12.5",
     "morgan": "^1.10.0",
     "winston": "^3.3.3",
     "winston-daily-rotate-file": "^4.5.2"

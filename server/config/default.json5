@@ -10,5 +10,11 @@
   server: {
     port: 3001,
     logger: 'debug',
-  }
+  },
+  mongo: {
+    link: null,
+    user: null,
+    pwd: null,
+    db: null,
+  },
 }
