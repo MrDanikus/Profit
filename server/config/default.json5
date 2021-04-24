@@ -17,4 +17,7 @@
     pwd: null,
     db: null,
   },
+  cors: {
+    whitelist: ['http://localhost']
+  },
 }
