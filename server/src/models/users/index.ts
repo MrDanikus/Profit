@@ -34,7 +34,7 @@ export type BaseUserModel = mongoose.Model<BaseUserDocument> & {
   findByLogin(login: string): Promise<BaseUserDocument>;
 };
 
-export const UserSchema = new mongoose.Schema<BaseUserDocument>(
+export const UserSchema = new mongoose.Schema<BaseUserDocument, BaseUserModel>(
   {
     _id: {
       type: mongoose.Types.ObjectId,

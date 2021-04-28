@@ -18,7 +18,7 @@ export type CommentModel = mongoose.Model<CommentDocument> & {
   findByAdId(adId: string): Promise<CommentDocument[]>;
 };
 
-const CommentSchema = new mongoose.Schema<CommentDocument>(
+const CommentSchema = new mongoose.Schema<CommentDocument, CommentModel>(
   {
     _id: {
       type: mongoose.Types.ObjectId,
