@@ -2,6 +2,12 @@ import mongoose from 'mongoose';
 
 import {toDotNotation} from '../../utils/util';
 
+type Icon = {
+  /* in base64 format */
+  data: string;
+  contentType: string;
+};
+
 export type Ad = {
   _id: string;
   name: string;
@@ -11,7 +17,7 @@ export type Ad = {
   tags: string[];
   discount: number;
   promocode: string;
-  icon: string;
+  icon: Icon;
   likes: number;
   expiresAt: Date;
   createdAt: Date;
@@ -22,6 +28,10 @@ export type AdDocument = mongoose.Document & Ad;
 
 export type AdModel = mongoose.Model<AdDocument> & {
   /**
+   * Increase like count of ad
+   */
+  likeById(id: string): Promise<void>;
+  /**
    * Marks ad as deleted
    */
   deleteById(id: string): Promise<AdDocument | null>;
@@ -31,12 +41,12 @@ export type AdModel = mongoose.Model<AdDocument> & {
   patchById(
     id: string,
     patchObject: Partial<
-      Omit<Ad, '_id' | 'isDeleted' | 'vendorId' | 'createdAt'>
+      Omit<Ad, '_id' | 'isDeleted' | 'vendorId' | 'createdAt' | 'likes'>
     >
   ): Promise<AdDocument | null>;
 };
 
-const AdSchema = new mongoose.Schema<AdDocument>(
+const AdSchema = new mongoose.Schema<AdDocument, AdModel>(
   {
     _id: {
       type: mongoose.Types.ObjectId,
@@ -102,6 +112,24 @@ AdSchema.index({
   expiresAt: -1,
 });
 
+/**
+ * Increase like count of ad
+ */
+AdSchema.statics.likeById = async function (
+  id: string
+): Promise<AdDocument | null> {
+  return await this.findByIdAndUpdate(
+    id,
+    {
+      $inc: {
+        likes: 1,
+      },
+    },
+    {
+      new: true,
+    }
+  );
+};
 /**
  * Marks ad as deleted
  */
