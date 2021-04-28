@@ -35,8 +35,7 @@ export class VendorSearchQuery extends BaseSearchQuery<
         $skip: this.options_.page! * this.options_.limit!,
       },
       {
-        $limit:
-          this.options_.limit! + 1 /* determines if there is a next page */,
+        $limit: this.options_.limit!,
       }
     );
 
@@ -50,18 +49,9 @@ export class VendorSearchQuery extends BaseSearchQuery<
       aggregationPipeline
     ).allowDiskUse(true);
 
-    if (res.length > this.options_.limit!) {
-      return {
-        next: true,
-        count: res.length - 1,
-        data: res.slice(0, -1),
-      };
-    } else {
-      return {
-        next: false,
-        count: res.length,
-        data: res,
-      };
-    }
+    return {
+      count: res.length,
+      data: res,
+    };
   }
 }

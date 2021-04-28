@@ -5,7 +5,6 @@ export type SearchQueryOptions<T> = {
 };
 
 export type SearchQueryResult<T> = {
-  next: boolean;
   count: number;
   data: T[];
 };
