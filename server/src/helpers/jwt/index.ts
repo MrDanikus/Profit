@@ -1,7 +1,7 @@
 import config from 'config';
 import jsonwebtoken from 'jsonwebtoken';
 
-import {BaseUser} from '../../models/users/base';
+import {BaseUser} from '../../models/users';
 import ServerError from '../../utils/errors/server-error';
 
 class JSONWebTokenError extends ServerError {

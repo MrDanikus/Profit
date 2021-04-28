@@ -22,10 +22,6 @@ export type AdDocument = mongoose.Document & Ad;
 
 export type AdModel = mongoose.Model<AdDocument> & {
   /**
-   * Finds ad by name
-   */
-  findByName(name: string): Promise<AdDocument | null>;
-  /**
    * Marks ad as deleted
    */
   deleteById(id: string): Promise<AdDocument | null>;
@@ -57,7 +53,7 @@ const AdSchema = new mongoose.Schema<AdDocument>(
       get: (val: mongoose.Types.ObjectId) => {
         return val ? val.toString() : val;
       },
-      ref: 'Vendor',
+      ref: 'User',
     },
     tags: [
       {
@@ -82,14 +78,30 @@ const AdSchema = new mongoose.Schema<AdDocument>(
   }
 );
 
-/**
- * Finds ad by name
- */
-AdSchema.statics.findByName = async function (
-  name: string
-): Promise<AdDocument | null> {
-  return await this.findOne({name});
-};
+AdSchema.index(
+  {
+    name: 'text',
+    description: 'text',
+    tags: 'text',
+  },
+  {
+    weights: {
+      name: 2,
+      description: 1,
+      tags: 1,
+    },
+    default_language: 'en',
+  }
+);
+AdSchema.index({
+  vendorId: -1,
+  tags: 1,
+  createdAt: 1,
+  likes: 1,
+  isDeleted: -1,
+  expiresAt: -1,
+});
+
 /**
  * Marks ad as deleted
  */

@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 
-import {Role} from '../role';
+import {Role} from './role';
 
 export type BaseUser = {
   _id: string;
@@ -22,7 +22,19 @@ export type BaseUserDocument = mongoose.Document &
     comparePassword(password: string): boolean;
   };
 
-export const BaseUserSchema = new mongoose.Schema<BaseUserDocument>(
+export type Client = BaseUser & {role: Role.CLIENT};
+export type Vendor = BaseUser & {role: Role.VENDOR};
+export type Admin = BaseUser & {role: Role.ADMIN};
+
+export type ClientDocument = BaseUserDocument & Client;
+export type VendorDocument = BaseUserDocument & Vendor;
+export type AdminDocument = BaseUserDocument & Admin;
+
+export type BaseUserModel = mongoose.Model<BaseUserDocument> & {
+  findByLogin(login: string): Promise<BaseUserDocument>;
+};
+
+export const UserSchema = new mongoose.Schema<BaseUserDocument>(
   {
     _id: {
       type: mongoose.Types.ObjectId,
@@ -68,7 +80,7 @@ export const BaseUserSchema = new mongoose.Schema<BaseUserDocument>(
 /**
  * Compares user's password and provided one
  */
-BaseUserSchema.methods.comparePassword = function (password: string) {
+UserSchema.methods.comparePassword = function (password: string) {
   console.log(this.collection.name);
   return bcrypt.compareSync(
     password,
@@ -78,8 +90,13 @@ BaseUserSchema.methods.comparePassword = function (password: string) {
 /**
  * Finds user by login
  */
-BaseUserSchema.statics.findByLogin = async function (
+UserSchema.statics.findByLogin = async function (
   login: string
 ): Promise<BaseUserDocument | null> {
   return await this.findOne({login});
 };
+
+export const Users = mongoose.model<BaseUserDocument, BaseUserModel>(
+  'User',
+  UserSchema
+);
