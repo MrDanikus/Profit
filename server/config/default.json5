@@ -17,6 +17,13 @@
     pwd: null,
     db: null,
   },
+  jwt: {
+    public_key: null,
+    private_key: null,
+    token_ttl: '30d',
+    algorithm: 'RS256',
+    version: '1.0',
+  },
   cors: {
     whitelist: ['http://localhost']
   },
