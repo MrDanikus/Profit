@@ -7,7 +7,7 @@ export type Ad = {
   name: string;
   description: string;
   link: string;
-  vendor: string;
+  vendorId: string;
   tags: string[];
   discount: number;
   promocode: string;
@@ -34,7 +34,9 @@ export type AdModel = mongoose.Model<AdDocument> & {
    */
   patchById(
     id: string,
-    patchObject: Partial<Omit<Ad, '_id' | 'isDeleted' | 'vendor' | 'createdAt'>>
+    patchObject: Partial<
+      Omit<Ad, '_id' | 'isDeleted' | 'vendorId' | 'createdAt'>
+    >
   ): Promise<AdDocument | null>;
 };
 
@@ -50,7 +52,7 @@ const AdSchema = new mongoose.Schema<AdDocument>(
     name: String,
     description: String,
     link: String,
-    vendor: {
+    vendorId: {
       type: mongoose.Types.ObjectId,
       get: (val: mongoose.Types.ObjectId) => {
         return val ? val.toString() : val;
@@ -107,7 +109,7 @@ AdSchema.statics.deleteById = async function (
  */
 AdSchema.statics.patchById = async function (
   id: string,
-  patchObject: Partial<Omit<Ad, '_id' | 'isDeleted' | 'vendor' | 'createdAt'>>
+  patchObject: Partial<Omit<Ad, '_id' | 'isDeleted' | 'vendorId' | 'createdAt'>>
 ): Promise<AdDocument | null> {
   return await this.findByIdAndUpdate(id, toDotNotation(patchObject), {
     new: true,
