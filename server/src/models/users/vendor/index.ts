@@ -10,7 +10,7 @@ export type VendorModel = mongoose.Model<VendorDocument> & {
   findByLogin(login: string): Promise<VendorDocument>;
 };
 
-export const VendorSchema = Object.assign({}, BaseUserSchema);
+export const VendorSchema = BaseUserSchema;
 
 export const Vendors = mongoose.model<VendorDocument, VendorModel>(
   'Vendor',

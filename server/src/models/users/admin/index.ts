@@ -10,7 +10,7 @@ export type AdminModel = mongoose.Model<AdminDocument> & {
   findByLogin(login: string): Promise<AdminDocument>;
 };
 
-export const AdminSchema = Object.assign({}, BaseUserSchema);
+export const AdminSchema = BaseUserSchema;
 
 export const Admins = mongoose.model<AdminDocument, AdminModel>(
   'Admin',

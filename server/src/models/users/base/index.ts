@@ -68,7 +68,8 @@ export const BaseUserSchema = new mongoose.Schema<BaseUserDocument>(
 /**
  * Compares user's password and provided one
  */
-BaseUserSchema.methods.comparePassword = async function (password: string) {
+BaseUserSchema.methods.comparePassword = function (password: string) {
+  console.log(this.collection.name);
   return bcrypt.compareSync(
     password,
     this.get('password', null, {getters: false})

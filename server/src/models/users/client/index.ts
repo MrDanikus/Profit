@@ -10,7 +10,7 @@ export type ClientModel = mongoose.Model<ClientDocument> & {
   findByLogin(login: string): Promise<ClientDocument>;
 };
 
-export const ClientSchema = Object.assign({}, BaseUserSchema);
+export const ClientSchema = BaseUserSchema;
 
 export const Clients = mongoose.model<ClientDocument, ClientModel>(
   'Client',
