@@ -5,7 +5,7 @@ import {BaseSearchQuery, SearchQueryResult, SearchQueryOptions} from '../base';
 
 export type AdSearchQueryOptions = SearchQueryOptions<Ad> & {
   q?: string;
-  tags?: string[];
+  tags?: string[] | string;
   vendorId?: string;
   from?: Date;
   to?: Date;
@@ -52,7 +52,9 @@ export class AdSearchQuery extends BaseSearchQuery<Ad, AdSearchQueryOptions> {
       aggregationPipeline.push({
         $match: {
           tags: {
-            $in: this.options_.tags,
+            $in: Array.isArray(this.options_.tags)
+              ? this.options_.tags
+              : [this.options_.tags],
           },
         },
       });
