@@ -37,6 +37,9 @@ const corsOptions: cors.CorsOptions = {
   optionsSuccessStatus: 204,
 };
 
+morgan.token('user', (req: Request) => {
+  return req.user ? `${req.user._id}` : 'anonymous';
+});
 morgan.token('remote-ip', (req: Request) => {
   return req.header('X-Real-Ip') || req.ip;
 });
@@ -56,7 +59,7 @@ export default [
       process.env.NODE_ENV === 'production' ? undefined : false,
   }),
   morgan(
-    ':remote-ip - :response-time ms - [:date[clf]] - :status ":method :url HTTP/:http-version" :body',
+    ':remote-ip user[:user] - :response-time ms - [:date[clf]] - :status ":method :url HTTP/:http-version" :body',
     {stream}
   ),
 ];
