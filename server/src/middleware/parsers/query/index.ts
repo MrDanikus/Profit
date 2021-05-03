@@ -28,7 +28,7 @@ export function parseQuery(options?: queryParseOptions) {
   return (req: Request, _res: Response, next: NextFunction) => {
     const query = req.originalUrl.split('?')[1] || '';
 
-    if (query.length > (options?.limit || 0)) {
+    if (query.length > (options?.limit || 300)) {
       return next(new QueryTooLongError());
     }
 
