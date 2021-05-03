@@ -1,6 +1,8 @@
 import {Request, Response, NextFunction} from 'express';
 import queryString from 'query-string';
 
+import {Middleware} from '../../base';
+
 import ServerError from '../../../utils/errors/server-error';
 
 declare module 'express' {
@@ -19,12 +21,12 @@ class QueryTooLongError extends ServerError {
   }
 }
 
-type queryParseOptions = queryString.ParseOptions & {
+type QueryParseOptions = queryString.ParseOptions & {
   /* query length limit in bytes */
   limit?: number;
 };
 
-export function parseQuery(options?: queryParseOptions) {
+function parseQuery(options?: QueryParseOptions) {
   return (req: Request, _res: Response, next: NextFunction) => {
     const query = req.originalUrl.split('?')[1] || '';
 
@@ -44,4 +46,12 @@ export function parseQuery(options?: queryParseOptions) {
 
     return next();
   };
+}
+
+export class QueryParser extends Middleware {
+  constructor(protected options?: QueryParseOptions) {
+    super();
+  }
+
+  middleware = parseQuery(this.options);
 }

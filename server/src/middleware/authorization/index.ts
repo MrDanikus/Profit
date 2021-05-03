@@ -4,6 +4,8 @@ import {Users, BaseUser, BaseUserDocument} from '../../models/users';
 import {Role as UserRole} from '../../models/users/role';
 import {JSONWebTokenHelper} from '../../helpers/jwt';
 
+import {Middleware} from '../base';
+
 import ServerError from '../../utils/errors/server-error';
 
 declare module 'express' {
@@ -74,7 +76,7 @@ export class Authorization {
   }
 }
 
-export class AuthorizationInstance {
+export class AuthorizationInstance extends Middleware {
   private allowedUserTypes: UserRole[];
   private requiredFlag = false;
   private relevantFlag = false;
@@ -83,8 +85,8 @@ export class AuthorizationInstance {
    * Constructs authorization instance with specified user role.
    */
   constructor(userType: UserRole) {
+    super();
     this.allowedUserTypes = [userType];
-    this.middleware = this.middleware.bind(this);
   }
   /**
    * Allows client authorization.
@@ -131,6 +133,7 @@ export class AuthorizationInstance {
     _res: Response,
     next: NextFunction
   ): Promise<void> {
+    console.log(this);
     let payload: BaseUser | null = null;
 
     /** Decode request bearer token */

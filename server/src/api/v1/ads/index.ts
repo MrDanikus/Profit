@@ -1,8 +1,8 @@
 import express from 'express';
 
 import {Authorization} from '../../../middleware/authorization';
-import {parseBody, parseQuery} from '../../../middleware/parsers';
-import {sanitizeRequest} from '../../../middleware/sanitizer';
+import {BodyParser, QueryParser} from '../../../middleware/parsers';
+import {RequestSanitizer} from '../../../middleware/sanitizer';
 
 import {AdController} from '../../../controllers/ads';
 import {CommentController} from '../../../controllers/comments';
@@ -12,45 +12,45 @@ const router = express.Router();
 
 router
   .route('/')
-  .get(parseQuery(), sanitizeRequest, AdController.getAll)
+  .get(new QueryParser(), new RequestSanitizer(), AdController.getAll)
   .post(
-    Authorization.vendor().required().middleware,
-    parseBody(),
-    sanitizeRequest,
+    Authorization.vendor().required(),
+    new BodyParser(),
+    new RequestSanitizer(),
     AdController.postAd
   )
   .all(ErrorController.methodNotAllowed);
 
 router
   .route('/:adId')
-  .get(parseQuery(), sanitizeRequest, AdController.getById)
+  .get(new QueryParser(), new RequestSanitizer(), AdController.getById)
   .patch(
-    Authorization.vendor().required().middleware,
-    parseBody(),
-    sanitizeRequest,
+    Authorization.vendor().required(),
+    new BodyParser(),
+    new RequestSanitizer(),
     AdController.patchById
   )
   .delete(
-    Authorization.vendor().required().middleware,
-    sanitizeRequest,
+    Authorization.vendor().required(),
+    new RequestSanitizer(),
     AdController.deleteById
   )
   .all(ErrorController.methodNotAllowed);
 
 router
   .route('/:adId/comments')
-  .get(parseQuery(), sanitizeRequest, CommentController.getAll)
+  .get(new QueryParser(), new RequestSanitizer(), CommentController.getAll)
   .post(
-    Authorization.vendor().client().admin().required().middleware,
-    parseBody(),
-    sanitizeRequest,
+    Authorization.vendor().client().admin().required(),
+    new BodyParser(),
+    new RequestSanitizer(),
     CommentController.postComment
   )
   .all(ErrorController.methodNotAllowed);
 
 router
   .route('/:adId/comments/:id')
-  .get(parseQuery(), sanitizeRequest, CommentController.getById)
+  .get(new QueryParser(), new RequestSanitizer(), CommentController.getById)
   .all(ErrorController.methodNotAllowed);
 
 export default router;
