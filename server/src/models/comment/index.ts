@@ -2,9 +2,8 @@ import mongoose from 'mongoose';
 
 export type Comment = {
   _id: string;
-  adId: string;
-  authorId: string;
-  authorName: string;
+  ad: string;
+  author: string;
   content: string;
   createdAt: Date;
 };
@@ -15,7 +14,15 @@ export type CommentModel = mongoose.Model<CommentDocument> & {
   /**
    * Finds all comments of provided ad
    */
-  findByAdId(adId: string): Promise<CommentDocument[]>;
+  findByAdId(ad: string): Promise<CommentDocument[]>;
+  /**
+   * Builds new comment with given attributes
+   */
+  build(
+    author: string,
+    ad: string,
+    attr: Pick<Comment, 'content'>
+  ): CommentDocument;
 };
 
 const CommentSchema = new mongoose.Schema<CommentDocument, CommentModel>(
@@ -27,21 +34,20 @@ const CommentSchema = new mongoose.Schema<CommentDocument, CommentModel>(
       },
       default: mongoose.Types.ObjectId,
     },
-    adId: {
+    ad: {
       type: mongoose.Types.ObjectId,
       get: (val: mongoose.Types.ObjectId) => {
         return val ? val.toString() : val;
       },
       ref: 'Ad',
     },
-    authorId: {
+    author: {
       type: mongoose.Types.ObjectId,
       get: (val: mongoose.Types.ObjectId) => {
         return val ? val.toString() : val;
       },
       ref: 'User',
     },
-    authorName: String,
     content: String,
   },
   {
@@ -53,9 +59,20 @@ const CommentSchema = new mongoose.Schema<CommentDocument, CommentModel>(
  * Finds comments by ad's id
  */
 CommentSchema.statics.findByLogin = async function (
-  adId: string
+  ad: string
 ): Promise<CommentDocument[]> {
-  return await this.find({adId});
+  return await this.find({ad});
+};
+
+/**
+ * Builds new comment with given attributes
+ */
+CommentSchema.statics.build = function (
+  author: string,
+  ad: string,
+  attr: Pick<Comment, 'content'>
+): CommentDocument {
+  return new Comments({author, ad, ...attr});
 };
 
 export const Comments = mongoose.model<CommentDocument, CommentModel>(

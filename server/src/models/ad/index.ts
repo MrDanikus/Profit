@@ -13,7 +13,7 @@ export type Ad = {
   name: string;
   description: string;
   link: string;
-  vendorId: string;
+  vendor: string;
   tags: string[];
   discount: number;
   promocode: string;
@@ -41,9 +41,16 @@ export type AdModel = mongoose.Model<AdDocument> & {
   patchById(
     id: string,
     patchObject: Partial<
-      Omit<Ad, '_id' | 'isDeleted' | 'vendorId' | 'createdAt' | 'likes'>
+      Omit<Ad, '_id' | 'isDeleted' | 'vendor' | 'createdAt' | 'likes'>
     >
   ): Promise<AdDocument | null>;
+  /**
+   * Builds new ad with given attributes
+   */
+  build(
+    vendor: string,
+    attr: Omit<Ad, '_id' | 'isDeleted' | 'vendor' | 'createdAt' | 'likes'>
+  ): AdDocument;
 };
 
 const AdSchema = new mongoose.Schema<AdDocument, AdModel>(
@@ -58,7 +65,7 @@ const AdSchema = new mongoose.Schema<AdDocument, AdModel>(
     name: String,
     description: String,
     link: String,
-    vendorId: {
+    vendor: {
       type: mongoose.Types.ObjectId,
       get: (val: mongoose.Types.ObjectId) => {
         return val ? val.toString() : val;
@@ -104,7 +111,7 @@ AdSchema.index(
   }
 );
 AdSchema.index({
-  vendorId: -1,
+  vendor: -1,
   tags: 1,
   createdAt: 1,
   likes: 1,
@@ -112,6 +119,15 @@ AdSchema.index({
   expiresAt: -1,
 });
 
+/**
+ * Builds new ad with given attributes
+ */
+AdSchema.statics.build = function (
+  vendor: string,
+  attr: Omit<Ad, '_id' | 'isDeleted' | 'vendor' | 'createdAt' | 'likes'>
+): AdDocument {
+  return new Ads({vendor, ...attr});
+};
 /**
  * Increase like count of ad
  */

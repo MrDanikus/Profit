@@ -82,6 +82,29 @@ export class AdSearchQuery extends BaseSearchQuery<Ad, AdSearchQueryOptions> {
       },
       {
         $limit: this.options_.limit!,
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'vendor',
+          foreignField: '_id',
+          as: 'vendor',
+        },
+      },
+      {
+        $unwind: {
+          path: '$vendor',
+        },
+      },
+      {
+        $project: {
+          vendor: {
+            login: 0,
+            password: 0,
+            likes: 0,
+            createdAt: 0,
+          },
+        },
       }
     );
 

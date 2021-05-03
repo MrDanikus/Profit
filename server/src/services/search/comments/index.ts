@@ -24,7 +24,7 @@ export class CommentSearchQuery extends BaseSearchQuery<
     aggregationPipeline.push(
       {
         $match: {
-          adId: new Types.ObjectId(this.adId_),
+          ad: new Types.ObjectId(this.adId_),
         },
       },
       {
@@ -37,6 +37,29 @@ export class CommentSearchQuery extends BaseSearchQuery<
       },
       {
         $limit: this.options_.limit!,
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'author',
+          foreignField: '_id',
+          as: 'author',
+        },
+      },
+      {
+        $unwind: {
+          path: '$author',
+        },
+      },
+      {
+        $project: {
+          author: {
+            login: 0,
+            password: 0,
+            likes: 0,
+            createdAt: 0,
+          },
+        },
       }
     );
 
