@@ -6,6 +6,6 @@ export type AuthenticationCredentialsValidatorType = {
 };
 
 export const AuthenticationCredentialsValidatorSchema = Joi.object({
-  login: Joi.string().max(64),
-  password: Joi.string().max(64),
+  login: Joi.string().max(64).required(),
+  password: Joi.string().max(64).required(),
 });
