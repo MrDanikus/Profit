@@ -73,6 +73,7 @@ export const UserSchema = new mongoose.Schema<BaseUserDocument, BaseUserModel>(
     },
   },
   {
+    id: false,
     timestamps: true,
   }
 );

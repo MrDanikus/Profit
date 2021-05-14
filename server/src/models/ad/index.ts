@@ -91,6 +91,7 @@ const AdSchema = new mongoose.Schema<AdDocument, AdModel>(
     },
   },
   {
+    id: false,
     timestamps: true,
   }
 );

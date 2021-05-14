@@ -51,6 +51,7 @@ const CommentSchema = new mongoose.Schema<CommentDocument, CommentModel>(
     content: String,
   },
   {
+    id: false,
     timestamps: true,
   }
 );
