@@ -5,12 +5,6 @@ import {Middleware} from '../../base';
 
 import ServerError from '../../../utils/errors/server-error';
 
-declare module 'express' {
-  export interface Request {
-    query: Record<string, unknown>;
-  }
-}
-
 class QueryTooLongError extends ServerError {
   constructor() {
     super(
@@ -42,7 +36,7 @@ function parseQuery(options?: QueryParseOptions) {
         parseBooleans: true,
         arrayFormat: 'comma',
       })
-    );
+    ) as {[key: string]: string | string[]};
 
     return next();
   };
