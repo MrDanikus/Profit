@@ -63,7 +63,7 @@ export class AdSearchQuery extends BaseSearchQuery<Ad, AdSearchQueryOptions> {
     aggregationPipeline.push({
       $match: {
         isDeleted: false,
-        createdAt: {
+        expiresAt: {
           $gte: this.options_.from,
           $lt: this.options_.to,
         },
