@@ -21,4 +21,10 @@ export class Validator<T> {
     if (error) throw new ValidationError(error.message);
     return value as T;
   }
+
+  static isObjectId(s: string): void {
+    if (s.match(/^[a-f0-9]{24}$/i) === null) {
+      throw new ValidationError(`${s} is not valid id`);
+    }
+  }
 }
