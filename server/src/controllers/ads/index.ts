@@ -155,4 +155,80 @@ export class AdController {
       return next(err);
     }
   }
+
+  static async putLike(req: Request, res: Response, next: NextFunction) {
+    try {
+      const {adId} = req.params;
+      Validator.isObjectId(adId);
+
+      const ad = await Ads.findById(adId, '_id isDeleted');
+      if (!ad) {
+        throw new ServerError(404, 'Ad not found', 'Wrong id');
+      }
+      if (ad.isDeleted) {
+        throw new ServerError(
+          410,
+          'Ad is deleted',
+          'Ad has been previously deleted'
+        );
+      }
+
+      if (!req.user) {
+        throw new ServerError(
+          403,
+          'Access denied',
+          'You have no permission to access this resource'
+        );
+      }
+
+      if (!req.user.likes.includes(adId)) {
+        req.user.likes.push(adId);
+        await req.user.save();
+
+        await Ads.findByIdAndUpdate(adId, {$inc: {likes: 1}});
+      }
+
+      res.status(204).end();
+    } catch (err) {
+      return next(err);
+    }
+  }
+
+  static async deleteLike(req: Request, res: Response, next: NextFunction) {
+    try {
+      const {adId} = req.params;
+      Validator.isObjectId(adId);
+
+      const ad = await Ads.findById(adId, '_id isDeleted');
+      if (!ad) {
+        throw new ServerError(404, 'Ad not found', 'Wrong id');
+      }
+      if (ad.isDeleted) {
+        throw new ServerError(
+          410,
+          'Ad is deleted',
+          'Ad has been previously deleted'
+        );
+      }
+
+      if (!req.user) {
+        throw new ServerError(
+          403,
+          'Access denied',
+          'You have no permission to access this resource'
+        );
+      }
+
+      if (req.user.likes.includes(adId)) {
+        req.user.likes.splice(req.user.likes.indexOf(adId), 1);
+        await req.user.save();
+
+        await Ads.findByIdAndUpdate(adId, {$inc: {likes: -1}});
+      }
+
+      res.status(204).end();
+    } catch (err) {
+      return next(err);
+    }
+  }
 }

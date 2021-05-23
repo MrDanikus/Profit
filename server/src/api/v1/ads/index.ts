@@ -25,15 +25,23 @@ router
   .route('/:adId')
   .get(new QueryParser(), new RequestSanitizer(), AdController.getById)
   .patch(
-    Authorization.vendor().required(),
+    Authorization.vendor().admin().required(),
     new BodyParser(),
     new RequestSanitizer(),
     AdController.patchById
   )
+  .delete(Authorization.vendor().admin().required(), AdController.deleteById)
+  .all(ErrorController.methodNotAllowed);
+
+router
+  .route('/:adId/like')
+  .put(
+    Authorization.vendor().client().admin().relevant().required(),
+    AdController.putLike
+  )
   .delete(
-    Authorization.vendor().required(),
-    new RequestSanitizer(),
-    AdController.deleteById
+    Authorization.vendor().client().admin().relevant().required(),
+    AdController.deleteLike
   )
   .all(ErrorController.methodNotAllowed);
 
