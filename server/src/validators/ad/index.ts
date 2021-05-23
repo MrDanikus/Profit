@@ -8,8 +8,8 @@ export type AdPatchValidatorType = Partial<
 >;
 
 export const AdPatchValidatorSchema = Joi.object({
-  name: Joi.string().max(128),
-  description: Joi.string().max(256),
+  name: Joi.string().max(30),
+  description: Joi.string().max(150),
   link: Joi.string().uri(),
   tags: Joi.array().items(Joi.string().max(64)),
   discount: Joi.number().integer().min(0).max(100),
@@ -24,11 +24,11 @@ export type AdPostValidatorType = Omit<
 >;
 
 export const AdPostValidatorSchema = Joi.object({
-  name: Joi.string().max(128).required(),
-  description: Joi.string().max(256).required(),
-  link: Joi.string().uri().required(),
-  tags: Joi.array().items(Joi.string().max(64)).required(),
-  discount: Joi.number().integer().min(0).max(100).required(),
+  name: Joi.string().max(30).required(),
+  description: Joi.string().max(150).required(),
+  link: Joi.string().uri(),
+  tags: Joi.array().items(Joi.string().max(64)),
+  discount: Joi.number().integer().min(0).max(100).default(100),
   promocode: Joi.string().max(64).required(),
   icon: Joi.string().required(),
   expiresAt: Joi.date().iso().required(),
