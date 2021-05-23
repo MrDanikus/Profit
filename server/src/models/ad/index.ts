@@ -2,12 +2,6 @@ import mongoose from 'mongoose';
 
 import {toDotNotation} from '../../utils/util';
 
-type Icon = {
-  /* in base64 format */
-  data: string;
-  contentType: string;
-};
-
 export type Ad = {
   _id: string;
   name: string;
@@ -17,7 +11,7 @@ export type Ad = {
   tags: string[];
   discount: number;
   promocode: string;
-  icon: Icon;
+  icon: string;
   likes: number;
   expiresAt: Date;
   createdAt: Date;
@@ -62,9 +56,18 @@ const AdSchema = new mongoose.Schema<AdDocument, AdModel>(
       },
       default: mongoose.Types.ObjectId,
     },
-    name: String,
-    description: String,
-    link: String,
+    name: {
+      type: String,
+      default: null,
+    },
+    description: {
+      type: String,
+      default: null,
+    },
+    link: {
+      type: String,
+      default: null,
+    },
     vendor: {
       type: mongoose.Types.ObjectId,
       get: (val: mongoose.Types.ObjectId) => {
@@ -166,7 +169,7 @@ AdSchema.statics.deleteById = async function (
  */
 AdSchema.statics.patchById = async function (
   id: string,
-  patchObject: Partial<Omit<Ad, '_id' | 'isDeleted' | 'vendorId' | 'createdAt'>>
+  patchObject: Partial<Omit<Ad, '_id' | 'isDeleted' | 'vendor' | 'createdAt'>>
 ): Promise<AdDocument | null> {
   return await this.findByIdAndUpdate(id, toDotNotation(patchObject), {
     new: true,
