@@ -4,10 +4,7 @@ export type SearchQueryOptions<T> = {
   fields?: (keyof T)[];
 };
 
-export type SearchQueryResult<T> = {
-  count: number;
-  data: T[];
-};
+export type SearchQueryResult<T> = T[];
 
 export abstract class BaseSearchQuery<
   T,

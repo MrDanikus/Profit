@@ -69,13 +69,6 @@ export class CommentSearchQuery extends BaseSearchQuery<
       });
     }
 
-    const res: Comment[] = await Comments.aggregate(
-      aggregationPipeline
-    ).allowDiskUse(true);
-
-    return {
-      count: res.length,
-      data: res,
-    };
+    return await Comments.aggregate(aggregationPipeline).allowDiskUse(true);
   }
 }

@@ -44,7 +44,7 @@ export class AdSearchQuery extends BaseSearchQuery<Ad, AdSearchQueryOptions> {
     if (this.options_.vendorId) {
       aggregationPipeline.push({
         $match: {
-          vendorId: new Types.ObjectId(this.options_.vendorId),
+          vendor: new Types.ObjectId(this.options_.vendorId),
         },
       });
     }
@@ -114,13 +114,6 @@ export class AdSearchQuery extends BaseSearchQuery<Ad, AdSearchQueryOptions> {
       });
     }
 
-    const res: Ad[] = await Ads.aggregate(aggregationPipeline).allowDiskUse(
-      true
-    );
-
-    return {
-      count: res.length,
-      data: res,
-    };
+    return await Ads.aggregate(aggregationPipeline).allowDiskUse(true);
   }
 }

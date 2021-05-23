@@ -45,13 +45,6 @@ export class VendorSearchQuery extends BaseSearchQuery<
       });
     }
 
-    const res: Vendor[] = await Users.aggregate(
-      aggregationPipeline
-    ).allowDiskUse(true);
-
-    return {
-      count: res.length,
-      data: res,
-    };
+    return await Users.aggregate(aggregationPipeline).allowDiskUse(true);
   }
 }

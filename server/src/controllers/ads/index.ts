@@ -24,7 +24,11 @@ export class AdController {
       ).validate(req.query);
 
       const result = await new AdSearchQuery(queryParams).exec();
-      res.json(result);
+      res.json({
+        type: 'ad',
+        count: result.length,
+        data: result,
+      });
     } catch (err) {
       return next(err);
     }
@@ -33,16 +37,23 @@ export class AdController {
   static async getById(req: Request, res: Response, next: NextFunction) {
     try {
       const {adId} = req.params;
+      Validator.isObjectId(adId);
 
       const queryParams = new Validator<AdSearchQueryValidatorType>(
         AdSearchQueryValidatorSchema
       ).validate(req.query);
 
+      const ad = await Ads.findById(adId, queryParams.fields?.join(' '))
+        .populate('vendor', 'name _id role')
+        .lean();
+
+      if (!ad) {
+        throw new ServerError(404, 'Ad not found', 'Wrong id');
+      }
+
       res.json({
-        data: await Ads.findById(adId, queryParams.fields?.join(' ')).populate(
-          'vendor',
-          'name _id role'
-        ),
+        type: 'ad',
+        data: ad,
       });
     } catch (err) {
       return next(err);
@@ -52,6 +63,7 @@ export class AdController {
   static async patchById(req: Request, res: Response, next: NextFunction) {
     try {
       const {adId} = req.params;
+      Validator.isObjectId(adId);
 
       const bodyParams = new Validator<AdPatchValidatorType>(
         AdPatchValidatorSchema
@@ -69,7 +81,10 @@ export class AdController {
         );
       }
 
-      if (ad.vendor !== req.user!._id) {
+      if (
+        !req.user ||
+        (ad.vendor !== req.user._id && req.user.role !== 'admin')
+      ) {
         throw new ServerError(
           403,
           'Access denied',
@@ -78,6 +93,7 @@ export class AdController {
       }
 
       res.json({
+        type: 'ad',
         data: await Ads.patchById(adId, bodyParams),
       });
     } catch (err) {
@@ -88,6 +104,7 @@ export class AdController {
   static async deleteById(req: Request, res: Response, next: NextFunction) {
     try {
       const {adId} = req.params;
+      Validator.isObjectId(adId);
 
       const ad = await Ads.findById(adId, '_id vendor isDeleted');
       if (!ad) {
@@ -101,7 +118,10 @@ export class AdController {
         );
       }
 
-      if (ad.vendor !== req.user!._id) {
+      if (
+        !req.user ||
+        (ad.vendor !== req.user._id && req.user.role !== 'admin')
+      ) {
         throw new ServerError(
           403,
           'Access denied',
@@ -126,7 +146,10 @@ export class AdController {
       const ad = Ads.build(req.user!._id, bodyParams);
 
       res.json({
-        data: await ad.save(),
+        type: 'ad',
+        data: await (await ad.save())
+          .populate('vendor', 'name _id role')
+          .execPopulate(),
       });
     } catch (err) {
       return next(err);

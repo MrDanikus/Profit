@@ -25,6 +25,7 @@ export class AuthenticationController {
       ).toObject({getters: true});
 
       res.json({
+        type: 'user',
         data: {
           ...user,
           token: await new JSONWebTokenHelper().encode(user),

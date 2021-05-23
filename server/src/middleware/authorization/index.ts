@@ -133,7 +133,6 @@ export class AuthorizationInstance extends Middleware {
     _res: Response,
     next: NextFunction
   ): Promise<void> {
-    console.log(this);
     let payload: BaseUser | null = null;
 
     /** Decode request bearer token */

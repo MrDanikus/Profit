@@ -14,6 +14,7 @@ export class VendorController {
         '_id role name'
       ).lean();
       res.json({
+        type: 'user',
         count: vendors.length,
         data: vendors,
       });
