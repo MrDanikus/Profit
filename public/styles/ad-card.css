@@ -1,0 +1,199 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap');
+
+.ad-wrapper {
+  min-width: 40em;
+
+  margin: auto;
+  margin-bottom: 2em;
+}
+
+.ad.card {
+  position: relative;
+  display: block;
+  width: 50%;
+  height: 100%;
+
+  max-width: 400px;
+
+  margin: auto;
+
+  font-family: 'Poppins', sans-serif;
+
+  scroll-snap-align: center;
+  scroll-margin-top: auto;
+  -webkit-scroll-margin-top: auto;
+  -ms-scroll-margin-top: auto;
+}
+
+.ad.card .menu-content {
+  list-style-type: none;
+}
+
+.ad.card .menu-content::after {
+  clear: both;
+}
+.ad.card .menu-content li {
+  display: inline-block;
+}
+.ad.card .menu-content a {
+  color: #1A181B;
+}
+.ad.card .menu-content span {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  font-size: 0.8em;
+  font-weight: bolder;
+  transform: translate(-50%, 0);
+}
+.ad.card .wrapper {
+  background-color: #F0F4EF;
+  height: 100%;
+  width: 100%;
+  min-height: 25em;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 19px 38px #09030238, 0 15px 12px #09030223;
+  transition: all 0.3s;
+}
+.ad.card .icon {
+  margin: 0.5%;
+  width: 99%;
+  height: 99%;
+  z-index: -100;
+  position: absolute;
+  transition: all 0.3s;
+}
+
+.ad.card .wrapper:hover .data {
+  transform: translateY(0);
+}
+.ad.card:hover .wrapper {
+  transition: all 0.3s;
+  transform: translateX(-45%);
+}
+
+.ad.card:hover .icon {
+  transition: all 0.3s;
+  transform: translateX(45%);
+}
+
+.ad.card .data {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  transition: transform 0.3s;
+}
+.ad.card .data .content {
+  padding: 1em;
+  position: relative;
+  z-index: 1;
+}
+.ad.card .vendor {
+  font-size: 1em;
+}
+.ad.card .title {
+  font-size: 2em;
+  line-height: 1;
+
+  margin: 0.3em 0;
+}
+.ad.card .text {
+  height: 5em;
+}
+
+.ad .tags-container {
+  font-size: 0.75em;
+  font-weight: 400;
+}
+
+.ad .tags-container .tag {
+  align-items: baseline;
+  vertical-align: middle;
+}
+
+.ad .tags-container .tag:not(:first-of-type)::before {
+  content: "•";
+  margin: 0 0.3em;
+}
+
+.ad .menu-content span {
+  transition: all 0.3s;
+  opacity: 0;
+}
+.ad .wrapper:hover .menu-content span {
+  transform: translate(-50%, -10px);
+  opacity: 1;
+}
+
+.ad .header {
+  padding: 1em;
+  font-family: 'Poppins', sans-serif;
+}
+.ad .header::after {
+  clear: both;
+}
+.ad .header .date {
+  float: left;
+  font-size: 1em;
+}
+.ad .menu-content {
+  float: right;
+}
+.ad .menu-content li {
+  position: relative;
+}
+.ad .menu-content li:not(:last-of-type) {
+  margin-right: 0.5em;
+}
+
+.ad .data {
+  color: #1A181B;
+  font-size: 1em;
+  transform: translateY(9.4em);
+}
+
+.ad .title a {
+  color: #1A181B;
+}
+.ad .promocode {
+  display: block;
+  width: 100%;
+  margin: 1em auto 1em;
+  text-align: center;
+  font-size: 1.2em;
+  color: #1A181B;
+  line-height: 100%;
+  position: relative;
+  font-weight: 700;
+}
+
+.promocode .code {
+  vertical-align: middle;
+  text-align: center;
+  line-height: 100%;
+  margin-left: 10px;
+}
+
+.promocode i {
+  vertical-align: middle;
+  text-align: center;
+  line-height: 100%;
+}
+
+.custom-tooltip {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  margin-top: -50px;
+  display: none;
+  z-index: 100;
+  font-weight: 400;
+  font-size: 15px;
+  padding: 4px;
+  background-color: #1A181B;
+  border-radius: 4px;
+  color: #FFFFFF;
+  transform: translateX(-50%);
+}

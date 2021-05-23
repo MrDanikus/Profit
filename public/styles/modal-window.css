@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap');
+
+modal-block {
+  content: '';
+  display: block;
+  position: absolute;
+
+  width: 100vw;
+  height: 100vh;
+
+  opacity: 0;
+
+  z-index: 1000;
+}
+
+modal-window {
+  position: absolute;
+  display: none;
+  flex-direction: column;
+
+  align-items: center;
+
+  background-color: #FFFFFF;
+
+  font-family: 'Poppins', sans-serif;
+  color: #1A181B;
+
+  max-width: 60vw;
+  max-height: 70vh;
+
+  padding: 0.5em;
+
+  border-radius: 20px;
+
+  box-shadow: 0 19px 38px #09030238, 0 15px 12px #09030223;
+
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  z-index: 1001;
+}
+
+modal-window[open] {
+  display: flex;
+}
+
+@media (max-width: 700px) {
+  modal-window {
+    max-width: 90%;
+    max-height: 90%;
+  }
+}
+
+modal-window .body {
+  overflow-y: scroll;
+  position: relative;
+
+  width: 100%;
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  scroll-snap-type: y mandatory;
+  -ms-scroll-snap-type: y mandatory;
+  -webkit-scroll-snap-type: y mandatory;
+}
+modal-window .body::-webkit-scrollbar {
+  display: none;
+}
+
+modal-window .close-wrapper {
+  position: absolute;
+  display: flex;
+
+  right: -1em;
+  top: -1em;
+
+  height: 1.4em;
+  width: 1.4em;
+  line-height: 1.2em;
+
+  border-radius: 50%;
+
+  padding: 0.1em;
+
+  color: #EF2D56;
+  align-self: flex-end;
+
+  background-color: inherit;
+  border: none;
+
+  vertical-align: middle;
+  align-items: baseline;
+  text-align: center;
+
+  z-index: 1005;
+
+  cursor: pointer;
+}
+
+modal-window .close {
+  display: block;
+  text-align: center; 
+
+  margin: auto;
+}
+
+modal-window .close-wrapper:hover {
+  transform: scale(1.1);
+}
+
+modal-window .close-wrapper:active {
+  color: #1A181B;
+}

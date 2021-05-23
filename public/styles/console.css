@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css?family=Ubuntu+Mono');
+
+console-view {
+  display: flex;
+  flex-flow: column;
+
+  font-family: 'Ubuntu mono';
+  color: #ddd;
+
+  width: 100%;
+  height: 60%;
+  max-width: 800px;
+  min-width: 300px;
+  min-height: 300px;
+
+  margin: auto;
+
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+
+  z-index: 100;
+  line-height: 1;
+}
+
+console-toolbar {
+  display: flex;
+  width: 100%;
+
+  padding: 0.4em;
+
+  background: #414549;
+
+  border-radius: 0.5em 0.5em 0 0;
+}
+
+console-body {
+  display: block;
+  flex: 1;
+
+  border-radius: 0 0 0.5em 0.5em;
+
+  padding: 0.5em;
+
+  overflow-y: auto;
+  background: #1d1e20;
+  width: 100%;
+}
+
+.console-input-wrapper {
+  width: 100%;
+  display: inline-flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+
+console-body input {
+  color: inherit;
+
+  background-color: transparent;
+  border: none;
+  outline: none;
+  margin: 0;
+  padding: 0;
+
+  vertical-align: middle;
+  line-height: 1;
+  font-size: 1em;
+  flex: 1; 
+
+  height: 1rem;
+  overflow: hidden;
+  resize: none;
+}
+
+.console-output-container * {
+  display: block;
+  line-height: 1;
+  height: auto;
+  max-width: 100%;
+  margin-bottom: 1em;
+}
+
+.console-output-container li {
+  display: list-item;
+  line-height: 1;
+  margin-bottom: 0.3em;
+}
+
+console-output {
+  white-space: pre;
+}
+
+console-output .json-key {
+  display: inline;
+  color: #FFFFFF;
+}
+console-output .json-value {
+  display: inline;
+  color: rgb(190, 49, 49);
+}
+console-output .json-string {
+  display: inline;
+  color: #2FBF71;
+}
+
+.console-input-wrapper:before {
+  display: flex;
+  color: #FFFFFF;
+  margin-right: 0.3em;
+  content: attr(data-before);
+}
+
+console-command::before {
+  color: #FFFFFF;
+  margin-right: 0.3em;
+  content: attr(data-before);
+}
+
+console-error::before {
+  font-weight: bolder;
+  color: #FFFFFF;
+  margin-right: 0.3em;
+  content: attr(data-before);
+}

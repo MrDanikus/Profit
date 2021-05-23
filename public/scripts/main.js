@@ -1,34 +1,38 @@
-const ready = () => {
-  const items = document.querySelectorAll('.vendor-item');
-  for (const item of items) {
-    const vendorId = item.getAttribute('vendor-id');
+import {ConsoleView} from './console-view/index.js';
+import {commands} from './commands/index.js';
 
-    // promocode
-    const promocode = item.querySelector('.promocode');
-    const icon = promocode.querySelector('i');
-    const code = promocode.querySelector('.code');
-    icon.onclick = (e) => {
-      e.preventDefault();
-      code.setAttribute('opened', true);
-      icon.classList = 'far fa-copy';
-      code.textContent = 'asdd-ahsd-quoi';
-    }
-
-    code.onclick = (e) => {
-      e.preventDefault();
-      if (code.getAttribute('opened')) {
-        const r = document.createRange();
-        r.selectNode(code);
-        window.getSelection().removeAllRanges();
-        window.getSelection().addRange(r);
-        document.execCommand('copy');
-        promocode.querySelector('.custom-tooltip').style.display = "inline";
-        setTimeout( function() {
-          promocode.querySelector(".custom-tooltip").style.display = "none";
-        }, 1000);
-      }
-    }
+/**
+ * Gets the type of browser
+ *
+ * @returns {string}
+ */
+const detectBrowser = () => { 
+  if((navigator.userAgent.indexOf("Opera") || navigator.userAgent.indexOf('OPR')) != -1 ) {
+    return 'Opera';
+  } else if(navigator.userAgent.indexOf("Chrome") != -1 ) {
+    return 'Chrome';
+  } else if(navigator.userAgent.indexOf("Safari") != -1) {
+    return 'Safari';
+  } else if(navigator.userAgent.indexOf("Firefox") != -1 ){
+    return 'Firefox';
+  } else if((navigator.userAgent.indexOf("MSIE") != -1 ) || (!!document.documentMode == true )) {
+    return 'IE';
+  } else {
+    return 'Unknown';
   }
 }
 
-document.addEventListener("DOMContentLoaded", ready);
+const user = JSON.parse(localStorage.getItem('user'));
+const consoleView = new ConsoleView(
+    document.querySelector('console-container'),
+    {
+        name: 'prc',
+        user: user?.name ?? 'unauthorized',
+        device: detectBrowser(),
+        commands,
+    },
+);
+
+if (user) {
+    consoleView.console.state.user = user;
+}
