@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Gaegu:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap');
 
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
@@ -78,7 +78,7 @@ render-container {
   margin-left: 0.5em;
   margin-top: 3vh;
 
-  font-family: 'Gaegu', cursive;
+  font-family: 'Poppins', sans-serif;
   font-size: 4em;
 
   z-index: 1000;
@@ -94,12 +94,13 @@ render-container {
 
 .logo .letter {
   display: inline-block;
-
   margin: 0;
 }
 
 .line {
+  display: inline-block;
   height: 1.12em;
+  margin-right: 0.1em;
 }
 
 .logo .letter:not(.line):nth-child(2n):hover {
