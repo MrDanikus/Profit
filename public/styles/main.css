@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Gaegu:wght@700&display=swap');
+
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
@@ -10,7 +12,6 @@
 
 body {
   display: flex;
-  /* background: linear-gradient(45deg, #57003f 0%,#f57453 100%) center/cover no-repeat; */
   background-color: #EAFDF8;
   margin: 0;
   padding: 0;
@@ -69,3 +70,60 @@ render-container {
     transform: none;
   }
 }
+
+.logo {
+  display: flex;
+  position: absolute;
+
+  margin-left: 0.5em;
+  margin-top: 3vh;
+
+  font-family: 'Gaegu', cursive;
+  font-size: 4em;
+
+  z-index: 1000;
+}
+
+.letters {
+  display: flex;
+}
+
+.logo * {
+  transition: cubic-bezier(0.215, 0.610, 0.355, 1) 0.5s;
+}
+
+.logo .letter {
+  display: inline-block;
+
+  margin: 0;
+}
+
+.line {
+  height: 1.12em;
+}
+
+.logo .letter:not(.line):nth-child(2n):hover {
+  transform: translateY(-0.2em) Rotate(20deg);
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1) 0.3s;
+}
+
+.logo .letter:not(.line):nth-child(2n+1):hover {
+  transform: translateY(-0.2em) Rotate(-20deg);
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1) 0.3s;
+}
+
+
+.logo:hover .letters {
+  transform: translateX(0.6em);
+}
+
+.logo:hover .line {
+  transform: rotate(90deg);
+  transform-origin: bottom;
+}
+
+/* @keyframes slideInOut {
+  0% {transform: translateX(0);}
+  50% {transform: ;}
+  100% {transform: translateX(0);}
+} */
