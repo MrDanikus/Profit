@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap');
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+body {
+  display: flex;
+  background-color: #EAFDF8;
+  margin: 0;
+  padding: 0;
+
+  width: 100vw;
+  height: 100vh;
+}
+
+console-container {
+  display: block;
+  position: relative;
+
+  float: left;
+  flex-grow: 1;
+  height: 90vh;
+
+  max-width: 45vw;
+
+  margin: auto;
+  padding: 2em;
+}
+
+render-container {
+  display: none;
+  position: relative;
+
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  -ms-scroll-snap-type: y mandatory;
+  -webkit-scroll-snap-type: y mandatory;
+
+  float: right;
+  flex-grow: 1;
+
+  height: 90vh;
+  max-width: 55vw;
+
+  margin: auto;
+  padding: 2em;
+}
+
+@media (max-width: 700px) {
+  console-container {
+    width: 96vw;
+    height: 96vh;
+    margin: 2vw;
+    top: 0;
+    transform: none;
+  }
+
+  render-container {
+    width: 96vw;
+    height: 96vh;
+    margin: 2vw;
+    top: 0;
+    transform: none;
+  }
+}
+
+.logo {
+  display: flex;
+  position: absolute;
+
+  margin-left: 0.5em;
+  margin-top: 3vh;
+
+  font-family: 'Poppins', sans-serif;
+  font-size: 4em;
+
+  z-index: 1000;
+}
+
+.letters {
+  display: flex;
+}
+
+.logo * {
+  transition: cubic-bezier(0.215, 0.610, 0.355, 1) 0.5s;
+}
+
+.logo .letter {
+  display: inline-block;
+  margin: 0;
+}
+
+.line {
+  display: inline-block;
+  height: 1.12em;
+  margin-right: 0.1em;
+}
+
+.logo .letter:not(.line):nth-child(2n):hover {
+  transform: translateY(-0.2em) Rotate(20deg);
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1) 0.3s;
+}
+
+.logo .letter:not(.line):nth-child(2n+1):hover {
+  transform: translateY(-0.2em) Rotate(-20deg);
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1) 0.3s;
+}
+
+
+.logo:hover .letters {
+  transform: translateX(0.6em);
+}
+
+.logo:hover .line {
+  transform: rotate(90deg);
+  transform-origin: bottom;
+}
+
+/* @keyframes slideInOut {
+  0% {transform: translateX(0);}
+  50% {transform: ;}
+  100% {transform: translateX(0);}
+} */

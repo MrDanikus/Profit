@@ -1,0 +1,101 @@
+@charset "UTF-8";
+
+carousel-container {
+  display: block;
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+  min-width: 100px;
+  min-height: 100px;
+
+  border-radius: 20px;
+
+  padding: 1em;
+
+  overflow: hidden;
+}
+
+carousel-slide-container {
+  display: block;
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+}
+
+carousel-slide {
+  display: none;
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+}
+
+carousel-slide.shown {
+  display: block;
+}
+
+carousel-button {
+  display: block;
+  position: relative;
+
+  padding: 0.2em;
+
+  color: rgb(26, 24, 27);
+  font-size: 2em;
+
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+carousel-button:hover {
+  background-color: rgba(26, 24, 27, 0.2);
+}
+
+carousel-button.prev {
+  float: left;
+}
+
+carousel-button.next {
+  float: right;
+}
+
+carousel-dot-container {
+  display: block;
+
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 1em;
+
+  left: 50%;
+  transform: translateX(-50%);
+
+  z-index: 100;
+}
+
+carousel-dot {
+  display: inline-block;
+  width: 0.7em;
+  height: 0.7em;
+
+  border-radius: 50%;
+
+  background-color: rgba(26, 24, 27, 0.5);
+  transition: linear 0.1s;
+}
+
+carousel-dot:not(:last-of-type) {
+  margin-right: 0.4em;
+}
+
+carousel-dot.active {
+  transform: scale(1.2);
+  background-color: rgba(26, 24, 27, 1);
+
+  margin-left: 0.3em;
+  margin-right: 0.6em;
+}
